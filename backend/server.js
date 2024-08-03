@@ -26,8 +26,8 @@ app.get('/', (req, res) => {
 });
 
 // Import routes here
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes.js');
 app.use('/api/users', userRoutes);
 
-const footprintRoutes = require('./routes/footprintRoutes');
+const footprintRoutes = require('./routes/footprintRoutes.js');
 app.use('/api/footprints', footprintRoutes);
