@@ -5,7 +5,8 @@ import { Droplet, Zap, Car } from "lucide-react";
 
 import profile from "../assets/profile/profile.png";
 
-const RankCard = () => {
+const RankCard = ({user}) => {
+  console.log(user)
   return (
     <>
       <div className="card flex flex-row align-items-center p-3">
