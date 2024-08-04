@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,51 +39,68 @@ const RegisterScreen = () => {
   };
 
   return (
-    <Form onSubmit={submitHandler}>
-      <Form.Group controlId='name'>
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type='text'
-          placeholder='Enter name'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </Form.Group>
+    <Container
+      fluid
+      className="d-flex align-items-center justify-content-center vh-100"
+      style={{ backgroundColor: '#f8f9fa' }}
+    >
+      <Row className="w-100">
+        <Col md={6} className="mx-auto">
+          <div className="bg-white p-5 rounded shadow">
+            <h2 className="text-center mb-4" style={{ color: '#343a40', fontWeight: 'bold' }}>Register</h2>
+            <Form onSubmit={submitHandler}>
+              <Form.Group controlId='name'>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Enter name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mb-3"
+                />
+              </Form.Group>
 
-      <Form.Group controlId='email'>
-        <Form.Label>Email Address</Form.Label>
-        <Form.Control
-          type='email'
-          placeholder='Enter email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Form.Group>
+              <Form.Group controlId='email'>
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type='email'
+                  placeholder='Enter email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mb-3"
+                />
+              </Form.Group>
 
-      <Form.Group controlId='password'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type='password'
-          placeholder='Enter password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Form.Group>
+              <Form.Group controlId='password'>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type='password'
+                  placeholder='Enter password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mb-3"
+                />
+              </Form.Group>
 
-      <Form.Group controlId='confirmPassword'>
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control
-          type='password'
-          placeholder='Confirm password'
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-      </Form.Group>
+              <Form.Group controlId='confirmPassword'>
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type='password'
+                  placeholder='Confirm password'
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="mb-4"
+                />
+              </Form.Group>
 
-      <Button type='submit' variant='primary'>
-        Register
-      </Button>
-    </Form>
+              <Button type='submit' variant='primary' className="w-100">
+                Register
+              </Button>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
