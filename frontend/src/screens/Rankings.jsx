@@ -16,21 +16,21 @@ const Rankings = () => {
         },
       };
 
-      const { data } = await axios.get("/api/footprints", config);
+      const { data } = await axios.get("/api/users", config);
       setFootprints(data);
     };
-
     fetchFootprints();
   }, []);
 
-  console.log();
+  console.log(footprints);
   return (
     <>
-      <div></div>
       <h1 className="p-1">Friend Rankings</h1>
-      {footprints.map((footprint) => (
-        <RankCard user={footprint} />
-      ))}
+      <div className="gap-5 m-1">
+        {footprints.map((footprint, index) => (
+          <RankCard key={index} index={index + 1} user={footprint} />
+        ))}
+      </div>
     </>
   );
 };

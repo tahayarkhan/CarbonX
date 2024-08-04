@@ -5,11 +5,14 @@ import { Droplet, Zap, Car } from "lucide-react";
 
 import profile from "../assets/profile/profile.png";
 
-const RankCard = ({user}) => {
-  console.log(user)
+const RankCard = ({ user, index }) => {
+  console.log(user);
   return (
     <>
-      <div className="card flex flex-row align-items-center p-3">
+      <div className="card flex flex-row align-items-center p-3 gap-5">
+        <div>
+          <h1>{index}</h1>
+        </div>
         <div className="d-flex flex-column align-items-center mr-3">
           <img
             src={profile}
@@ -24,15 +27,15 @@ const RankCard = ({user}) => {
           <div className="d-flex flex-wrap gap-4 mt-3">
             <div className=" d-flex flex-row gap-1 align-content-center">
               <Droplet size={30} />
-              <p className="fs-5">100 L</p>
+              <p className="fs-5">{user.waterUsage}</p>
             </div>
             <div className=" d-flex flex-row gap-1  align-content-center">
               <Zap size={30} />
-              <p className="fs-5">50 kW</p>
+              <p className="fs-5">{user.electricityUsage}</p>
             </div>
             <div className=" d-flex flex-row  gap-1  align-content-center">
               <Car size={30} />
-              <p className="fs-5"> 10 L</p>
+              <p className="fs-5">{user.carUsage}</p>
             </div>
           </div>
         </div>
