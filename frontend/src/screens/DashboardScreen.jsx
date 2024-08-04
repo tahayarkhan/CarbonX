@@ -48,7 +48,7 @@ const DashboardScreen = () => {
 
   return (
     <>
-      <Row>
+      <Row >
         <Col md={6}>
           <h2>Track Your Daily Usage</h2>
           <Form onSubmit={submitHandler}>
