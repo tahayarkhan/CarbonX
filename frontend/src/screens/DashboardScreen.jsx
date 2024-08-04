@@ -165,9 +165,10 @@
 // export default DashboardScreen;
 
 import React, { useEffect, useState } from 'react';
-import { Table, Row, Col, Container, Button } from 'react-bootstrap';
+import { Table, Container, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import { createModel, trainModel, predict } from '../../../backend/predictiveModel';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
 
 // Register necessary components
@@ -178,6 +179,18 @@ const DashboardScreen = () => {
   const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState({ water: [], electricity: [], car: [] });
 
+
+  useEffect(() => {
+    const initializeModel = async () => {
+      const { model: loadedModel, footprintsData } = await fetchDataAndTrainModel();
+      setFootprints(footprintsData);
+      setModel(loadedModel);
+    };
+
+    initializeModel();
+  }, []);
+
+  
   useEffect(() => {
     const fetchFootprints = async () => {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -233,62 +246,55 @@ const DashboardScreen = () => {
   });
 
   return (
-    <Container fluid className="d-flex align-items-center justify-content-center vh-100" style={{ backgroundColor: '#f8f9fa' }}>
-      <Row className="w-100">
-        <Col md={8} className="mx-auto">
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-center mb-4" style={{ color: '#343a40', fontWeight: 'bold' }}>Your Footprints</h2>
-            <Table striped bordered hover responsive className='table-sm'>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Water (liters)</th>
-                  <th>Electricity (kWh)</th>
-                  <th>Car (km)</th>
+    <Container fluid className="d-flex align-items-start justify-content-center vh-100" style={{ backgroundColor: '#f8f9fa' }}>
+      <div className="w-100">
+        <div className="bg-white p-4 rounded shadow">
+          <h2 className="text-center mb-4" style={{ color: '#343a40', fontWeight: 'bold' }}>Your Footprints</h2>
+          <Table striped bordered hover responsive className='table-sm'>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Water (liters)</th>
+                <th>Electricity (kWh)</th>
+                <th>Car (km)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {footprints.map((footprint) => (
+                <tr key={footprint._id}>
+                  <td>{footprint.date.substring(0, 10)}</td>
+                  <td>{footprint.waterUsage}</td>
+                  <td>{footprint.electricityUsage}</td>
+                  <td>{footprint.carUsage}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {footprints.map((footprint) => (
-                  <tr key={footprint._id}>
-                    <td>{footprint.date.substring(0, 10)}</td>
-                    <td>{footprint.waterUsage}</td>
-                    <td>{footprint.electricityUsage}</td>
-                    <td>{footprint.carUsage}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-            <Button onClick={handlePredict} variant='primary' className="mt-4">Predict Future Usage</Button>
-            
-            <Row className="mt-4">
-              <Col md={4}>
-                <h4 className="text-center">Predicted Water Usage</h4>
-                <div style={{ height: '300px' }}>
-                  <Line data={chartData(['Current', 'Predicted'], predictions.water, 'Water Usage')} key={JSON.stringify(predictions.water)} />
-                </div>
-              </Col>
-              <Col md={4}>
-                <h4 className="text-center">Predicted Electricity Usage</h4>
-                <div style={{ height: '300px' }}>
-                  <Line data={chartData(['Current', 'Predicted'], predictions.electricity, 'Electricity Usage')} key={JSON.stringify(predictions.electricity)} />
-                </div>
-              </Col>
-              <Col md={4}>
-                <h4 className="text-center">Predicted Car Usage</h4>
-                <div style={{ height: '300px' }}>
-                  <Line data={chartData(['Current', 'Predicted'], predictions.car, 'Car Usage')} key={JSON.stringify(predictions.car)} />
-                </div>
-              </Col>
-            </Row>
-
-
-            
+              ))}
+            </tbody>
+          </Table>
+          <Button onClick={handlePredict} variant='primary' className="mt-4">Predict Future Usage</Button>
+          
+          {/* Graphs stacked vertically */}
+          <div className="mt-4">
+            <h4 className="text-center">Predicted Water Usage</h4>
+            <div style={{ height: '300px' }}>
+              <Line data={chartData(['Current', 'Predicted'], predictions.water, 'Water Usage')} key={JSON.stringify(predictions.water)} />
+            </div>
           </div>
-        </Col>
-      </Row>
+          <div className="mt-4">
+            <h4 className="text-center">Predicted Electricity Usage</h4>
+            <div style={{ height: '300px' }}>
+              <Line data={chartData(['Current', 'Predicted'], predictions.electricity, 'Electricity Usage')} key={JSON.stringify(predictions.electricity)} />
+            </div>
+          </div>
+          <div className="mt-4">
+            <h4 className="text-center">Predicted Car Usage</h4>
+            <div style={{ height: '300px' }}>
+              <Line data={chartData(['Current', 'Predicted'], predictions.car, 'Car Usage')} key={JSON.stringify(predictions.car)} />
+            </div>
+          </div>
+        </div>
+      </div>
     </Container>
   );
 };
 
 export default DashboardScreen;
-
