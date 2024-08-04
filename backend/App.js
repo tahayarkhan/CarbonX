@@ -16,7 +16,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.log("DB CONNECTION ERROR", err));
 
 
-
 app.use(cors({origin:true, credentials:true}));
 app.use(morgan("dev"));
 

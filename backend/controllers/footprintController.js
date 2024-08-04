@@ -16,8 +16,16 @@ const addFootprint = async (req, res) => {
 };
 
 const getFootprints = async (req, res) => {
-    const footprints = await Footprint.find({ user: req.user._id });
-    res.json(footprints);
+    try {
+        // Fetch footprints and populate user information
+        const footprints = await Footprint.find({ user: req.user._id })
+            .populate('user', 'name') // Assuming the User model has a 'name' field
+            .exec();
+
+        res.json(footprints);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching footprints", error: error.message });
+    }
 };
 
 module.exports = { addFootprint, getFootprints };

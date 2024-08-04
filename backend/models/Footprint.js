@@ -10,4 +10,7 @@ const footprintSchema = new mongoose.Schema({
 
 const Footprint = mongoose.model('Footprint', footprintSchema);
 
+
+
+
 module.exports = Footprint;
