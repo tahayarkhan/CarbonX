@@ -30,6 +30,7 @@ const App = () => {
           <Route path='/register' element={<RegisterScreen />} />
           <Route path='/login' element={<LoginScreen />} />
           <Route path='/dashboard' element={<DashboardScreen />} />
+          
           <Route path='/rankings' element={<Rankings />} />
         </Routes>
       </Container>
