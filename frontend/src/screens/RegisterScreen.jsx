@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
@@ -23,6 +23,7 @@ const RegisterScreen = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        
       };
 
       const { data } = await axios.post(
@@ -97,6 +98,14 @@ const RegisterScreen = () => {
                 Register
               </Button>
             </Form>
+
+            <div className="text-center mt-3">
+              <span>Already have an account? </span>
+              <Link to="/login" style={{ color: '#007bff' }}>
+                Login
+              </Link>
+            </div>
+            
           </div>
         </Col>
       </Row>

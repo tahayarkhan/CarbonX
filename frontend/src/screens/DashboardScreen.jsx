@@ -170,6 +170,7 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { createModel, trainModel, predict } from '../../../backend/predictiveModel';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import { useNavigate } from 'react-router-dom';
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
@@ -178,6 +179,7 @@ const DashboardScreen = () => {
   const [footprints, setFootprints] = useState([]);
   const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState({ water: [], electricity: [], car: [] });
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -232,6 +234,10 @@ const DashboardScreen = () => {
     }
   };
 
+  const handleAddFootprints = () => {
+    navigate('/footprintform');
+  };
+
   const chartData = (labels, data, label) => ({
     labels,
     datasets: [
@@ -270,7 +276,11 @@ const DashboardScreen = () => {
               ))}
             </tbody>
           </Table>
-          <Button onClick={handlePredict} variant='primary' className="mt-4">Predict Future Usage</Button>
+          
+          <div className="d-flex justify-content-center gap-3 mt-4">
+            <Button onClick={handlePredict} variant='primary'>Predict Future Usage</Button>
+            <Button onClick={handleAddFootprints} variant='primary'>Add more footprints</Button>
+          </div>
           
           {/* Graphs stacked vertically */}
           <div className="mt-4">
