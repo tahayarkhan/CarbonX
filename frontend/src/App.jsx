@@ -35,10 +35,6 @@ const App = () => {
         </Routes>
       </Container>
     </Router>
-    // <div className='App'>
-    //   <h1>{data}</h1>
-    // </div>
-
   );
 };
 

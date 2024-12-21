@@ -61,6 +61,7 @@ export const fetchDataAndTrainModel = async () => {
 
     const model = await loadModel(); // Load existing model or create a new one
     await trainModel(model, inputs, outputs); // Train the model
+    
 };
 
 // Make a prediction
