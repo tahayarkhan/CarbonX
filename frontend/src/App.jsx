@@ -24,7 +24,6 @@ const App = () => {
   return (
     
     <Router>
-      <Container>
         <Routes>
           <Route path='/' element={<HomeScreen />} exact />
           <Route path='/register' element={<RegisterScreen />} />
@@ -33,7 +32,6 @@ const App = () => {
           <Route path='/footprintform' element={<FootprintForm />} />
           <Route path='/rankings' element={<Rankings />} />
         </Routes>
-      </Container>
     </Router>
   );
 };
