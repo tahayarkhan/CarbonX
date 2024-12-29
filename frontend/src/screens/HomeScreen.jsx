@@ -5,8 +5,8 @@ import Navbar from '../components/Navbar';
 
 const HomeScreen = () => {
   return (
-    
-    
+
+
     <div
     className="d-flex align-items-center justify-content-center vh-100 vw-100"
     style={{ 
@@ -17,9 +17,8 @@ const HomeScreen = () => {
     
     }}
     >
+      
       <Navbar/>
-    
-
 
       <Row className="justify-content-center text-center w-100">
         <Col md={8} className="bg-white p-5 rounded shadow">

@@ -38,6 +38,8 @@ const DashboardScreen = () => {
         },
       };
 
+      
+  
       const { data } = await axios.get('/api/footprints', config);
       setFootprints(data);
 

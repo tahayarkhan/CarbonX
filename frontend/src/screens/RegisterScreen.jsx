@@ -7,6 +7,7 @@ import  leaf  from '/leaf.png';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
+  const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,6 +22,7 @@ const RegisterScreen = () => {
     }
 
     try {
+      
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -30,12 +32,13 @@ const RegisterScreen = () => {
 
       const { data } = await axios.post(
         '/api/users',
-        { name, email, password },
+        { name, email, username, password },
         config
       );
 
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate('/dashboard');
+
     } catch (error) {
       alert('Error occurred during registration');
     }
@@ -59,7 +62,7 @@ const RegisterScreen = () => {
       >
       
         <a href='/' style={{ textDecoration: 'none' }}>
-          <h2 className="text-center" style={{ marginTop: '30px', color: '#FFFFFF', fontWeight: 'bold', fontSize: '37px'}}>
+          <h2 className="text-center" style={{ marginTop: '5px', color: '#FFFFFF', fontWeight: 'bold', fontSize: '37px'}}>
             Carbon
             <img src={leaf} style={{ width: '60px', height: '60px', marginRight: '10px' }} />
           </h2>
@@ -69,7 +72,7 @@ const RegisterScreen = () => {
         <Form onSubmit={submitHandler}>
           
           <Form.Group controlId='name'>
-            <Form.Label style={{ marginTop: '25px', color: '#FFFFFF', fontSize: '15px '}}>Full Name</Form.Label>
+            <Form.Label style={{ marginTop: '15px', color: '#FFFFFF', fontSize: '15px '}}>Full Name</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Full Name'
@@ -79,7 +82,7 @@ const RegisterScreen = () => {
                 style={{ borderRadius: '10px' }}
               />
           </Form.Group>
-
+          
 
           <Form.Group controlId='email'>
             <Form.Label style={{ color: '#FFFFFF', fontSize: '15px'}}>Email</Form.Label>
@@ -88,6 +91,18 @@ const RegisterScreen = () => {
               placeholder='Email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="mb-3"
+              style={{ borderRadius: '10px' }}
+            />
+          </Form.Group>
+
+          <Form.Group controlId='username'>
+            <Form.Label style={{ color: '#FFFFFF', fontSize: '15px'}}>Username</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Username'
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
               className="mb-3"
               style={{ borderRadius: '10px' }}
             />
@@ -113,13 +128,13 @@ const RegisterScreen = () => {
               placeholder='Confirm Password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="mb-4"
+              className="mb-3"
               style={{ borderRadius: '10px' }}
             />
           </Form.Group>
 
         
-          <Button type='submit' variant='primary' className="w-100" style={{ marginTop: '25px',backgroundColor: '#5BC562', color: '#000000', fontWeight: 'bold', borderRadius: '28px'}}>
+          <Button type='submit' variant='primary' className="w-100" style={{ marginTop: '20px',backgroundColor: '#5BC562', color: '#000000', fontWeight: 'bold', borderRadius: '28px'}}>
             Sign up
           </Button>
         

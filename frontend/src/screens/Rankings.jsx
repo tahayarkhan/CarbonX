@@ -4,15 +4,20 @@ import axios from "axios";
 import RankCard from "../components/RankCard";
 import Navbar from '../components/Navbar';
 
+
 const Rankings = () => {
   return (
-    <>
-      <div>
-      <Navbar/>
-      <h1 className="p-1">Friend Rankings</h1>
-      <RankCard />
+  
+    <div className="d-flex justify-content-center vh-100 vw-100">
+      <Navbar />
+      <div style={{ paddingTop: "70px" }}> {/* Adjust padding to match Navbar height */}
+      
+          <h1 className="mt-4 mb-4 text-center">Friend Rankings</h1>
+          <RankCard />
+      
       </div>
-    </>
+    </div>
+
   );
 };
 
