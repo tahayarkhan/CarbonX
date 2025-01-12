@@ -93,7 +93,6 @@ const Settings = () => {
               </div>
             
 
-            <h3>taha.yar</h3>
             <button type="submit" className="btn btn-primary">
               Submit
             </button>

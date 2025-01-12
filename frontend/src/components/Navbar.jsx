@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import profile from "../assets/profile/profile.png";
+import React, { useEffect, useState } from 'react';
+import defaultImage from '../assets/profile/default.jpg';
 import  leaf  from '/leaf.png';
 import { useNavigate } from 'react-router-dom'; // Corrected import
+import axios from 'axios';
 
 
 const Navbar = () => {
 
+    const [postImage, setPostImage] = useState({ myFile: "" });
+  
  
     const navigate = useNavigate();
     const logoutHandler = () => {
@@ -15,6 +18,28 @@ const Navbar = () => {
     const goToSettings = () => {
         navigate('/settings'); // Redirect to the settings page
     };
+
+    useEffect(() => {
+      const fetchProfilePicture = async () => {
+        try {
+          const token = localStorage.getItem('authToken');
+          if (token) {
+            const headers = {
+              Authorization: `Bearer ${token}`,
+            };
+            const response = await axios.get('http://localhost:8080/api/users/profilePicture', { headers });
+            const { profilePicture } = response.data;
+            if (profilePicture) {
+              setPostImage({ myFile: profilePicture });
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching profile picture", error);
+        }
+      };
+  
+      fetchProfilePicture();
+    }, []);  // Runs only once when the component mounts
 
 
 
@@ -86,7 +111,7 @@ const Navbar = () => {
             <li className="nav-item dropdown">
                 
             <img
-                src={profile}
+                src={postImage.myFile || defaultImage}
                 className="rounded-circle btn-secondary dropdown-toggle"
                 alt="profile"
                 id="dropdownMenuLink"
