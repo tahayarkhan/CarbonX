@@ -4,11 +4,33 @@ import  leaf  from '/leaf.png';
 import { useNavigate } from 'react-router-dom'; // Corrected import
 import axios from 'axios';
 
-
 const Navbar = () => {
 
-    const [postImage, setPostImage] = useState({ myFile: "" });
-  
+  const [postImage, setPostImage] = useState({ myFile: "" });
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+          const headers = {
+            Authorization: `Bearer ${token}`,
+          };
+          const response = await axios.get('http://localhost:8080/api/users/profilePicture', { headers });
+          const { profilePicture } = response.data;
+          if (profilePicture) {
+            setPostImage({ myFile: profilePicture });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching profile picture", error);
+      }
+    };
+
+    fetchProfilePicture();
+  }, []);  // Runs only once when the component mounts
+
+
  
     const navigate = useNavigate();
     const logoutHandler = () => {
