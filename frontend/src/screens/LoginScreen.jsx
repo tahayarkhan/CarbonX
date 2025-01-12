@@ -27,6 +27,8 @@ const LoginScreen = () => {
       );
 
       localStorage.setItem('userInfo', JSON.stringify(data));
+      localStorage.setItem('authToken', data.token);
+
       navigate('/dashboard');
     } catch (error) {
       alert('Invalid email or password');

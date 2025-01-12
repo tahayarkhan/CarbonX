@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const footprintSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
@@ -10,5 +10,4 @@ const footprintSchema = new mongoose.Schema({
 
 const Footprint = mongoose.model('Footprint', footprintSchema);
 
-
-module.exports = Footprint;
+export default Footprint;

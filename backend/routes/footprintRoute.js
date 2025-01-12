@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { addFootprint, getFootprints } from '../controllers/footprintController.js';
+import { protect } from '../middleware/authMiddleware.js';
+
 const router = express.Router();
-const { addFootprint, getFootprints } = require('../controllers/footprintController.js');
-const { protect } = require('../middleware/authMiddleware');
 
 router.route('/').post(protect, addFootprint).get(protect, getFootprints);
 
-module.exports = router;
+export default router;

@@ -1,10 +1,12 @@
-const User = require('../models/User');
-const generateToken = require('../utils/generateToken');
-const mongoose = require('mongoose');
-const { GridFSBucket } = require('mongodb');
+import User from '../models/User.js';
+import generateToken from '../utils/generateToken.js';  // Import correctly based on your project structure
+import mongoose from 'mongoose';
+import { GridFSBucket } from 'mongodb';
+import jwt from 'jsonwebtoken';
+
 
 // Register a new user
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     const { name, email, username, password } = req.body;
 
     const userExists = await User.findOne({ email });
@@ -13,7 +15,7 @@ const registerUser = async (req, res) => {
     if (userExists) {
         return res.status(400).json({ message: 'User already exists' });
     }
-    
+
     if (userNameExists) {
         return res.status(400).json({ message: 'Username already exists' });
     }
@@ -40,9 +42,8 @@ const registerUser = async (req, res) => {
     }
 };
 
-
 // Authenticate a user
-const authUser = async (req, res) => {
+export const authUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -61,7 +62,7 @@ const authUser = async (req, res) => {
 };
 
 // Get all users
-const getUser = async (req, res) => {
+export const getUser = async (req, res) => {
     try {
         const users = await User.find({});
         return res.status(200).json(users);
@@ -72,8 +73,54 @@ const getUser = async (req, res) => {
 
 
 
+export const uploadPicture = async (req, res) => {
+    const { myFile } = req.body; // The base64 string sent from the frontend
+  
+    if (!myFile) {
+      return res.status(400).json({ message: "No image provided" });
+    }
+  
+    try {
+      // Verify the token and extract user data
+      const token = req.headers.authorization?.split(' ')[1]; // Bearer token
+      if (!token) {
+        return res.status(401).json({ message: 'No token, authorization denied' });
+      }
+  
+      const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+      const userId = decoded.id; // Assuming token contains user ID
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Update the user's profile picture
+      user.profilePicture = myFile;
+  
+      await user.save();
+  
+      return res.status(200).json({
+        message: 'Profile picture updated successfully',
+        profilePicture: user.profilePicture,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error processing the image" });
+    }
+  };
 
 
 
-
-module.exports = { registerUser, authUser, getUser };
+  export const getProfilePicture = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id); // Ensure user ID is decoded from the token
+        if (user) {
+            return res.status(200).json({ profilePicture: user.profilePicture });
+        } else {
+            return res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

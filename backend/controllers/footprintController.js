@@ -1,6 +1,6 @@
-const Footprint = require('../models/Footprint');
+import Footprint from '../models/Footprint.js';
 
-const addFootprint = async (req, res) => {
+export const addFootprint = async (req, res) => {
     const { waterUsage, electricityUsage, carUsage } = req.body;
 
     const footprint = new Footprint({
@@ -15,7 +15,7 @@ const addFootprint = async (req, res) => {
     res.status(201).json(createdFootprint);
 };
 
-const getFootprints = async (req, res) => {
+export const getFootprints = async (req, res) => {
     try {
         // Fetch footprints and populate user information
         const footprints = await Footprint.find({ user: req.user._id })
@@ -27,5 +27,3 @@ const getFootprints = async (req, res) => {
         res.status(500).json({ message: "Error fetching footprints", error: error.message });
     }
 };
-
-module.exports = { addFootprint, getFootprints };
