@@ -1,38 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import Navbar from '../components/Navbar';
+import React from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const HomeScreen = () => {
   return (
-
-
-    <div
-    className="d-flex align-items-center justify-content-center vh-100 vw-100"
-    style={{ 
-      backgroundColor: '#5BC562',
-      backgroundImage: 'linear-gradient(to bottom, #5BC562,rgba(0, 0, 0, 0.8))', 
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    
-    }}
-    >
-      
-      <Navbar/>
-
-      <Row className="justify-content-center text-center w-100">
-        <Col md={8} className="bg-white p-5 rounded shadow">
-          <h1 className="display-4 text-primary">CarbonX</h1>
-          <Link to='/register'>
-            <Button variant="primary" size="lg" className="mt-3" >Get Started</Button>
+    <div className="flex items-center justify-center min-h-screen w-full bg-green-500 bg-gradient-to-t from-green-500 via-green-500 to-black bg-cover bg-center">
+      <Navbar />
+      <div className="flex justify-center text-center w-full">
+        <div className="rounded-full shadow-lg max-w-2xl p-6 bg-white">
+          <Link
+            to="/register"
+            className="block w-full text-center py-3 px-6 bg-green-600 text-white font-bold text-lg rounded-full hover:bg-green-700 transition duration-300"
+          >
+            Register Now
           </Link>
-        </Col>
-      </Row>
-    
+        </div>
+      </div>
     </div>
-
-
-
   );
 };
 

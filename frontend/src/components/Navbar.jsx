@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import defaultImage from '../assets/profile/default.jpg';
-import  leaf  from '/leaf.png';
-import { useNavigate } from 'react-router-dom'; // Corrected import
+import leaf from '/leaf.png';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Navbar = () => {
-
-  const [postImage, setPostImage] = useState({ myFile: "" });
+  const [postImage, setPostImage] = useState({ myFile: '' });
 
   useEffect(() => {
     const fetchProfilePicture = async () => {
@@ -23,160 +22,114 @@ const Navbar = () => {
           }
         }
       } catch (error) {
-        console.error("Error fetching profile picture", error);
+        console.error('Error fetching profile picture', error);
       }
     };
 
     fetchProfilePicture();
-  }, []);  // Runs only once when the component mounts
+  }, []);
 
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.removeItem('userInfo');
+    navigate('/login');
+  };
 
- 
-    const navigate = useNavigate();
-    const logoutHandler = () => {
-        localStorage.removeItem('userInfo');
-        navigate('/login');
-    };
-    const goToSettings = () => {
-        navigate('/settings'); // Redirect to the settings page
-    };
-
-    useEffect(() => {
-      const fetchProfilePicture = async () => {
-        try {
-          const token = localStorage.getItem('authToken');
-          if (token) {
-            const headers = {
-              Authorization: `Bearer ${token}`,
-            };
-            const response = await axios.get('http://localhost:8080/api/users/profilePicture', { headers });
-            const { profilePicture } = response.data;
-            if (profilePicture) {
-              setPostImage({ myFile: profilePicture });
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching profile picture", error);
-        }
-      };
-  
-      fetchProfilePicture();
-    }, []);  // Runs only once when the component mounts
-
-
+  const goToSettings = () => {
+    navigate('/settings');
+  };
 
   return (
-    <nav
-      className="navbar navbar-expand navbar-light"
-      style={{
-        backgroundColor: '#000000',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-      }}
-    >
-
-
-
-      <a
-        className="navbar-brand"
-        href="#"
-        style={{
-          marginLeft: '20px',
-          fontWeight: 'bold',
-          color: '#FFFFFF',
-        }}
-      >
-        Carbon
-        <img src={leaf} style={{ width: '30px', height: '30px' }} />
-      </a>
-
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarNav">
     
-        <ul
-          className="navbar-nav ml-auto"
-          style={{
-            marginLeft: 'auto',
-            marginRight: '20px',
+    
+    <nav className="bg-black fixed top-0 left-0 w-full py-4 px-6 shadow-lg z-50">
+      <div className="flex items-center justify-between">
+        <a href="#" className="text-white font-bold text-xl flex items-center">
+          Carbon
+          <img src={leaf} alt="Leaf" className="ml-2 w-8 h-8" />
+        </a>
+        <button
+          className="text-white md:hidden"
+          onClick={() => {
+            const mobileNav = document.getElementById('navbarNav');
+            mobileNav.classList.toggle('hidden');
           }}
         >
-          <li className="nav-item active">
-            <a className="nav-link" href="/" style={{ marginRight: '20px', color: '#FFFFFF' }}>
+          <span className="material-icons">menu</span>
+        </button>
+        <div className="hidden md:flex items-center space-x-8">
+          <a href="/" className="text-white hover:text-green-400">
+            Home
+          </a>
+          <a href="/dashboard" className="text-white hover:text-green-400">
+            Dashboard
+          </a>
+          <a href="/rankings" className="text-white hover:text-green-400">
+            Leaderboard
+          </a>
+          <div className="relative">
+            <img
+              src={postImage.myFile || defaultImage}
+              alt="Profile"
+              className="w-10 h-10 rounded-full cursor-pointer"
+              onClick={() => {
+                const dropdown = document.getElementById('profileDropdown');
+                dropdown.classList.toggle('hidden');
+              }}
+            />
+            <div
+              id="profileDropdown"
+              className="hidden absolute top-12 right-0 bg-white text-black rounded-lg shadow-md w-40 py-2"
+            >
+              <button
+                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-200"
+                onClick={goToSettings}
+              >
+                Settings
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-200"
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div id="navbarNav" className="hidden md:hidden">
+        <ul className="flex flex-col items-center space-y-4 mt-4">
+          <li>
+            <a href="/" className="text-white hover:text-green-400">
               Home
             </a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/dashboard" style={{ marginRight: '20px', color: '#FFFFFF' }}>
+          <li>
+            <a href="/dashboard" className="text-white hover:text-green-400">
               Dashboard
             </a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/rankings" style={{ marginRight: '20px', color: '#FFFFFF' }}>
+          <li>
+            <a href="/rankings" className="text-white hover:text-green-400">
               Leaderboard
             </a>
           </li>
-
-
-            <li className="nav-item dropdown">
-                
-            <img
-                src={postImage.myFile || defaultImage}
-                className="rounded-circle btn-secondary dropdown-toggle"
-                alt="profile"
-                id="dropdownMenuLink"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true" 
-                aria-expanded="false"
-                style={{
-                    width: "40px",
-                    height: "40px",
-                    cursor: 'pointer',
-                }}
-            />
-                
-                <div
-                className="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownMenuLink"
-                style={{
-                    backgroundColor: '#FFF',
-                    color: '#000',
-                    borderRadius: '5px',
-                    position: 'absolute',
-                    top: '50px',
-                    right: '0',
-                    width: '150px'
-                }}
-                >
-                <a className="dropdown-item" onClick={goToSettings} href="#">
-                    Settings
-                </a>
-                <a className="dropdown-item" onClick={logoutHandler} href="#">
-                    Logout
-                </a>
-                </div>
-            </li>
-
-
-   
+          <li>
+            <button className="text-white hover:text-green-400" onClick={goToSettings}>
+              Settings
+            </button>
+          </li>
+          <li>
+            <button className="text-white hover:text-green-400" onClick={logoutHandler}>
+              Logout
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
+  );
+};
 
-
-  )
-}
-
-export default Navbar
+export default Navbar;

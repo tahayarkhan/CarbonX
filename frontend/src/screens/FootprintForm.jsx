@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 const FootprintForm = () => {
@@ -32,46 +31,72 @@ const FootprintForm = () => {
   };
 
   return (
-    <Row>
-      <Col md={6}>
-        <h2>Track Your Daily Usage</h2>
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='waterUsage'>
-            <Form.Label>Water Usage (liters)</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter water usage'
+    <div className="flex justify-center">
+      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          Track Your Daily Usage
+        </h2>
+        <form onSubmit={submitHandler} className="space-y-4">
+          <div>
+            <label
+              htmlFor="waterUsage"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Water Usage (liters)
+            </label>
+            <input
+              type="number"
+              id="waterUsage"
+              placeholder="Enter water usage"
               value={waterUsage}
               onChange={(e) => setWaterUsage(e.target.value)}
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group controlId='electricityUsage'>
-            <Form.Label>Electricity Usage (kWh)</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter electricity usage'
+          <div>
+            <label
+              htmlFor="electricityUsage"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Electricity Usage (kWh)
+            </label>
+            <input
+              type="number"
+              id="electricityUsage"
+              placeholder="Enter electricity usage"
               value={electricityUsage}
               onChange={(e) => setElectricityUsage(e.target.value)}
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group controlId='carUsage'>
-            <Form.Label>Car Usage (km)</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter car usage'
+          <div>
+            <label
+              htmlFor="carUsage"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Car Usage (km)
+            </label>
+            <input
+              type="number"
+              id="carUsage"
+              placeholder="Enter car usage"
               value={carUsage}
               onChange={(e) => setCarUsage(e.target.value)}
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
-          </Form.Group>
+          </div>
 
-          <Button type='submit' variant='primary'>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white font-medium py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
             Submit
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 
