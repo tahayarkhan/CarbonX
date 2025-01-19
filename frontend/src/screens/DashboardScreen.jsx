@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
 import { Line } from 'react-chartjs-2';
-import { createModel, trainModel, predict } from '../../../backend/predictiveModel';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import axios from 'axios';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
@@ -16,38 +22,21 @@ const DashboardScreen = () => {
   const [predictions, setPredictions] = useState({ water: [], electricity: [], car: [] });
   const navigate = useNavigate();
 
-
-  useEffect(() => {
-    const initializeModel = async () => {
-      const { model: loadedModel, footprintsData } = await fetchDataAndTrainModel();
-      setFootprints(footprintsData);
-      setModel(loadedModel);
-    };
-
-    initializeModel();
-  }, []);
-
-  
   useEffect(() => {
     const fetchFootprints = async () => {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
-      
-  
       const { data } = await axios.get('/api/footprints', config);
       setFootprints(data);
 
-      // Prepare data for training
       const inputs = data.map(fp => [fp.waterUsage, fp.electricityUsage, fp.carUsage]);
-      const outputs = inputs; // For simplicity, let's predict the same data
+      const outputs = inputs;
 
-      // Create and train the model
       const predictiveModel = createModel();
       await trainModel(predictiveModel, inputs, outputs);
       setModel(predictiveModel);
@@ -62,7 +51,6 @@ const DashboardScreen = () => {
       const input = [latestFootprint.waterUsage, latestFootprint.electricityUsage, latestFootprint.carUsage];
       const prediction = predict(model, input);
 
-      // Set predictions for each usage type
       setPredictions({
         water: [latestFootprint.waterUsage, prediction[0]],
         electricity: [latestFootprint.electricityUsage, prediction[1]],
@@ -89,96 +77,76 @@ const DashboardScreen = () => {
   });
 
   return (
-    
-    <div className="d-flex align-items-center justify-content-center " style={{ backgroundColor: '#f8f9fa' }}>
-      
+   
+   
+   
+   <div className="flex items-center justify-center min-h-screen bg-green-50">
       
       <Navbar/>
-   
-      <Row className="mx-3 my-4">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
         
-        <Col xs={12} md={6}>
-        
-          <div 
-            className="bg-white  p-4 rounded shadow"
-            style={{ marginTop: '50px' }}
-          >
-            
-            <h2 className="text-center mb-4" style={{ color: '#343a40', fontWeight: 'bold' }}>Your Footprints</h2>
-            
-            <Table striped bordered hover responsive className='table-sm'>
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">Your Footprints</h2>
+            <table className="table-auto w-full border-collapse border border-gray-300 text-sm">
               <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Water (liters)</th>
-                  <th>Electricity (kWh)</th>
-                  <th>Car (km)</th>
+                <tr className="bg-gray-200">
+                  <th className="border border-gray-300 px-4 py-2">Date</th>
+                  <th className="border border-gray-300 px-4 py-2">Water (liters)</th>
+                  <th className="border border-gray-300 px-4 py-2">Electricity (kWh)</th>
+                  <th className="border border-gray-300 px-4 py-2">Car (km)</th>
                 </tr>
               </thead>
               <tbody>
                 {footprints.map((footprint) => (
-                  <tr key={footprint._id}>
-                    <td>{footprint.date.substring(0, 10)}</td>
-                    <td>{footprint.waterUsage}</td>
-                    <td>{footprint.electricityUsage}</td>
-                    <td>{footprint.carUsage}</td>
+                  <tr key={footprint._id} className="odd:bg-white even:bg-gray-100">
+                    <td className="border border-gray-300 px-4 py-2">{footprint.date.substring(0, 10)}</td>
+                    <td className="border border-gray-300 px-4 py-2">{footprint.waterUsage}</td>
+                    <td className="border border-gray-300 px-4 py-2">{footprint.electricityUsage}</td>
+                    <td className="border border-gray-300 px-4 py-2">{footprint.carUsage}</td>
                   </tr>
                 ))}
               </tbody>
-            </Table>
-            
-            <div className="d-flex justify-content-center gap-3 mt-4">
-              <Button onClick={handleAddFootprints} variant='primary'>Add more footprints</Button>
+            </table>
+            <div className="flex justify-center mt-6">
+              <button onClick={handleAddFootprints} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Add more footprints
+              </button>
             </div>
-            
-            
           </div>
-        
-        
-        </Col>
-
-
-       
-        <Col xs={12} md={6}>
-          
-          <div 
-            className="bg-white p-4 rounded shadow"
-            style={{ marginTop: '50px' }}
-          >
-        
-            <div className="mt-4">
-              <h4 className="text-center">Predicted Water Usage</h4>
-              <div style={{ height: '300px' }}>
-                <Line data={chartData(['Current', 'Predicted'], predictions.water, 'Water Usage')} key={JSON.stringify(predictions.water)} />
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-center">Predicted Electricity Usage</h4>
-              <div style={{ height: '300px' }}>
-                <Line data={chartData(['Current', 'Predicted'], predictions.electricity, 'Electricity Usage')} key={JSON.stringify(predictions.electricity)} />
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-center">Predicted Car Usage</h4>
-              <div style={{ height: '300px' }}>
-                <Line data={chartData(['Current', 'Predicted'], predictions.car, 'Car Usage')} key={JSON.stringify(predictions.car)} />
-              </div>
-            </div>
-
-            <div className="d-flex justify-content-center gap-3">
-              <Button onClick={handlePredict} variant='primary'>Predict Future Usage</Button>
-            </div>
-            
-            
-
           </div>
-          </Col>
-          </Row>
 
-      
+
+
+
+
+          {/* <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h4 className="text-center text-lg font-semibold text-gray-800 mb-4">Predicted Water Usage</h4>
+            <div className="h-64">
+              <Line data={chartData(['Current', 'Predicted'], predictions.water, 'Water Usage')} key={JSON.stringify(predictions.water)} />
+            </div>
+            <h4 className="text-center text-lg font-semibold text-gray-800 mt-6 mb-4">Predicted Electricity Usage</h4>
+            <div className="h-64">
+              <Line data={chartData(['Current', 'Predicted'], predictions.electricity, 'Electricity Usage')} key={JSON.stringify(predictions.electricity)} />
+            </div>
+            <h4 className="text-center text-lg font-semibold text-gray-800 mt-6 mb-4">Predicted Car Usage</h4>
+            <div className="h-64">
+              <Line data={chartData(['Current', 'Predicted'], predictions.car, 'Car Usage')} key={JSON.stringify(predictions.car)} />
+            </div>
+            <div className="flex justify-center mt-6">
+              <button onClick={handlePredict} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                Predict Future Usage
+              </button>
+            </div>
+          </div> */}
+
+
+
+        
       </div>
+    </div>
   );
 };
 

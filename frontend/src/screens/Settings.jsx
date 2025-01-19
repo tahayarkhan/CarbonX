@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import defaultImage from '../assets/profile/default.jpg';
-import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 const url = "http://localhost:8080/api/users/";
@@ -29,21 +28,21 @@ const Settings = () => {
     };
 
     fetchProfilePicture();
-  }, []);  // Runs only once when the component mounts
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const userData = {
-      myFile: postImage.myFile // Only include the image (profile picture) here
+      myFile: postImage.myFile
     };
-  
+
     try {
-      const token = localStorage.getItem('authToken'); // Assuming you store the JWT token in localStorage
+      const token = localStorage.getItem('authToken');
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-  
+
       await axios.post('http://localhost:8080/api/users/upload', userData, { headers });
       console.log("Profile picture updated successfully");
     } catch (error) {
@@ -59,47 +58,36 @@ const Settings = () => {
   };
 
   return (
-
-    
-    <div className="d-flex align-items-center justify-content-center vh-100 vw-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <Navbar />
-          
-          <form onSubmit={handleSubmit} className="text-center">
-            
 
-          <div class="form-group text-center">
-            <label htmlFor="file-upload">
-              
-              <img
-                src={postImage.myFile || defaultImage}
-                class="img-responsive rounded-circle object-fit-cover"
-                alt="profile"
-                style={{ width: "200px", height: "200px" }}
-              />
+      <form onSubmit={handleSubmit} className="text-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="flex flex-col items-center">
+          <label htmlFor="file-upload" className="cursor-pointer">
+            <img
+              src={postImage.myFile || defaultImage}
+              alt="profile"
+              className="rounded-full object-cover w-48 h-48"
+            />
+          </label>
 
-            </label>
+          <input
+            type="file"
+            name="myFile"
+            id="file-upload"
+            accept=".jpeg, .png, .jpg"
+            className="mt-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring focus:ring-green-500 focus:border-green-500"
+            onChange={handleFileUpload}
+          />
+        </div>
 
-            
-              <input
-                type="file"
-                label="Image"
-                name="myFile"
-                id="file-upload"
-                accept=".jpeg, .png, .jpg"
-                className="form-control mt-4"
-                onChange={handleFileUpload}
-              />
-
-              </div>
-            
-
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-
-
-          </form>
-  
+        <button
+          type="submit"
+          className="mt-6 px-4 py-2 bg-green-500 text-white font-semibold rounded shadow hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

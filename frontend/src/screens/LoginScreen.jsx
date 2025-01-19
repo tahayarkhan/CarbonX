@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import  leaf  from '/leaf.png';
+import leaf from '/leaf.png';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -36,72 +34,67 @@ const LoginScreen = () => {
   };
 
   return (
-    <div
-      className="d-flex align-items-center justify-content-center vh-100 vw-100"
-      style={{ 
-        backgroundColor: '#5BC562',
-        backgroundImage: 'linear-gradient(to bottom, #5BC562,rgba(0, 0, 0, 0.8))', 
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      
-      }}
-    >
-
-      <div 
-        className="p-5 shadow"
-        style={{ width: '375px', height: '619px', backgroundColor: '#1C211C', borderRadius: '25px' }}
-      >
-        
-
-        <a href='/' style={{ textDecoration: 'none' }}>
-          <h2 className="text-center" style={{ marginTop: '30px', color: '#FFFFFF', fontWeight: 'bold', fontSize: '37px'}}>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-green-500 via-green-500 to-black">
+      <div className="p-6 shadow-lg rounded-lg w-96 h-[619px] bg-gray-900">
+        <a href="/" className="text-center no-underline">
+          <h2 className="text-white font-bold text-3xl mt-8">
             Carbon
-            <img src={leaf} style={{ width: '60px', height: '60px', marginRight: '10px' }} />
+            <img
+              src={leaf}
+              alt="leaf"
+              className="inline-block w-14 h-14 ml-2"
+            />
           </h2>
         </a>
-        
-          <Form onSubmit={submitHandler} >
 
-            <Form.Group controlId='email'>
+        <form onSubmit={submitHandler} className="mt-8">
+          <div className="mb-6">
+            <label htmlFor="email" className="block text-white text-sm mb-2">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
 
-              <Form.Label style={{ marginTop: '40px', color: '#FFFFFF', fontSize: '15px'}}>Email</Form.Label>
-              <Form.Control
-                type='email'
-                placeholder='Email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mb-3 w-100"
-                style={{ borderRadius: '10px' }}
-              />
-            </Form.Group>
+          <div className="mb-6">
+            <label htmlFor="password" className="block text-white text-sm mb-2">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
 
-            <Form.Group controlId='password'>
-              <Form.Label style={{ color: '#FFFFFF', fontSize: '15px'}}>Password</Form.Label>
-              <Form.Control
-                type='password'
-                placeholder='Password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mb-4 w-100"
-                style={{ borderRadius: '10px' }}
-              />
-            </Form.Group>
+          <button
+            type="submit"
+            className="w-full py-3 mt-4 bg-green-500 text-black font-bold rounded-full hover:bg-green-600 transition duration-300"
+          >
+            Login
+          </button>
+        </form>
 
-            <Button type='submit' variant='primary' className="w-100" style={{backgroundColor: '#5BC562', color: '#000000', fontWeight: 'bold', borderRadius: '28px'}}>
-              Login
-            </Button>
-        
-          </Form>
+        <p className="text-center text-white text-sm mt-6 underline cursor-pointer">
+          Forgot your password?
+        </p>
 
-          <p className='text-center' style={{ marginTop: '50px', color: '#FFFFFF', fontSize: '15px', textDecoration: 'underline'}}>Forgot your password?</p>
-
-          <p className='text-center' style={{ color: '#FFFFFF', fontSize: '15px'}}>
-            Don't have an account? {''} 
-            <a href="/register" style={{ color: '#FFFFFF', fontSize: '15px', textDecoration: 'underline'}}>Sign up.</a>
-          </p> 
-        
+        <p className="text-center text-white text-sm mt-4">
+          Don't have an account?{' '}
+          <a href="/register" className="underline">
+            Sign up.
+          </a>
+        </p>
       </div>
-     
     </div>
   );
 };
