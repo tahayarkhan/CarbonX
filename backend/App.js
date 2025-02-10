@@ -6,12 +6,13 @@ import dotenv from 'dotenv';
 import Post from './models/post.model.js';
 import testRoutes from './routes/test.js';
 import userRoutes from './routes/userRoutes.js';
+import friendRoutes from './routes/friendRoutes.js';
 import footprintRoutes from './routes/footprintRoute.js';
 import fs from 'fs';
 import path from 'path';
 import bodyParser from 'body-parser';
 
-// Configure dotenv
+// Configure dotenv-
 dotenv.config();
 
 const app = express();
@@ -73,6 +74,10 @@ app.use(morgan("dev"));
 app.use("/", testRoutes);
 app.use("/api/users", userRoutes);
 app.use('/api/footprints', footprintRoutes);
+app.use("/api/friends", friendRoutes);
+
+
+
 
 // Start the server
 const PORT = process.env.PORT || 8080;
