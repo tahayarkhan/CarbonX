@@ -1,9 +1,7 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';  // Import correctly based on your project structure
 import mongoose from 'mongoose';
-import { GridFSBucket } from 'mongodb';
 import jwt from 'jsonwebtoken';
-
 
 // Register a new user
 export const registerUser = async (req, res) => {
@@ -71,56 +69,64 @@ export const getUser = async (req, res) => {
     }
 };
 
-
-
+// Upload Profile Picture
 export const uploadPicture = async (req, res) => {
     const { myFile } = req.body; // The base64 string sent from the frontend
-  
+
     if (!myFile) {
-      return res.status(400).json({ message: "No image provided" });
+        return res.status(400).json({ message: "No image provided" });
     }
-  
+
     try {
-      // Verify the token and extract user data
-      const token = req.headers.authorization?.split(' ')[1]; // Bearer token
-      if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-      }
-  
-      const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
-      const userId = decoded.id; // Assuming token contains user ID
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-  
-      // Update the user's profile picture
-      user.profilePicture = myFile;
-  
-      await user.save();
-  
-      return res.status(200).json({
-        message: 'Profile picture updated successfully',
-        profilePicture: user.profilePicture,
-      });
+        // Verify the token and extract user data
+        const token = req.headers.authorization?.split(' ')[1]; // Bearer token
+        if (!token) {
+            return res.status(401).json({ message: 'No token, authorization denied' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+        const userId = decoded.id; // Assuming token contains user ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Update the user's profile picture
+        user.profilePicture = myFile;
+
+        await user.save();
+
+        return res.status(200).json({
+            message: 'Profile picture updated successfully',
+            profilePicture: user.profilePicture,
+        });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error processing the image" });
+        console.error(error);
+        res.status(500).json({ message: "Error processing the image" });
     }
-  };
+};
 
-
-
-  export const getProfilePicture = async (req, res) => {
+// Get Profile Picture
+export const getProfilePicture = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id); // Ensure user ID is decoded from the token
-        if (user) {
-            return res.status(200).json({ profilePicture: user.profilePicture });
-        } else {
+        // Verify the token and extract user data
+        const token = req.headers.authorization?.split(' ')[1]; // Bearer token
+        if (!token) {
+            return res.status(401).json({ message: 'No token, authorization denied' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+        const userId = decoded.id; // Assuming token contains user ID
+        const user = await User.findById(userId);
+
+        if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+
+        return res.status(200).json({ profilePicture: user.profilePicture });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: error.message });
     }
 };

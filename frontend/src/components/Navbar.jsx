@@ -32,6 +32,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const logoutHandler = () => {
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('authToken');
     navigate('/login');
   };
 
