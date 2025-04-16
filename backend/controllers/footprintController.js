@@ -20,7 +20,7 @@ export const getFootprints = async (req, res) => {
     try {
         // Fetch footprints and populate user information
         const footprints = await Footprint.find({ user: req.user._id })
-            .populate('user', 'name') // Assuming the User model has a 'name' field
+            .populate('user', 'name profilePicture') // Assuming the User model has a 'name' field
             .exec();
 
         res.json(footprints);
@@ -47,5 +47,18 @@ export const getFriendsFootprints = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ message: "Error fetching friends' footprints", error: error.message });
+    }
+};
+
+export const getAllFootprints = async (req, res) => {
+    try {
+        // Fetch all footprints and populate user information
+        const footprints = await Footprint.find()
+            .populate('user', 'name profilePicture') // Assuming User model has profilePicture
+            .exec();
+
+        res.json(footprints);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching all footprints", error: error.message });
     }
 };

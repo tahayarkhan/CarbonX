@@ -34,20 +34,20 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-green-500 via-green-500 to-black">
-      <div className="p-6 shadow-lg rounded-lg w-96 h-[619px] bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-green-500 to-black">
+      <div className="w-full max-w-md p-8 shadow-2xl rounded-2xl bg-white/10 backdrop-blur-md">
         <a href="/" className="text-center no-underline">
-          <h2 className="text-white font-bold text-3xl mt-8">
+          <h2 className="text-white font-bold text-3xl mt-2 tracking-tight hover:tracking-wide transition-all duration-300">
             Carbon
             <img
               src={leaf}
               alt="leaf"
-              className="inline-block w-14 h-14 ml-2"
+              className="inline-block w-14 h-14 ml-2 transition-transform duration-300 hover:scale-110"
             />
           </h2>
         </a>
 
-        <form onSubmit={submitHandler} className="mt-8">
+        <form onSubmit={submitHandler} className="mt-6">
           <div className="mb-6">
             <label htmlFor="email" className="block text-white text-sm mb-2">
               Email
@@ -55,10 +55,10 @@ const LoginScreen = () => {
             <input
               id="email"
               type="email"
-              placeholder="Email"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 rounded-lg bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-3 rounded-xl bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -69,24 +69,24 @@ const LoginScreen = () => {
             <input
               id="password"
               type="password"
-              placeholder="Password"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 rounded-lg bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-3 rounded-xl bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 mt-4 bg-green-500 text-black font-bold rounded-full hover:bg-green-600 transition duration-300"
+            className="w-full py-3 mt-4 bg-green-500 text-black font-bold rounded-xl hover:bg-green-600 transition duration-300"
           >
             Login
           </button>
         </form>
 
-        <p className="text-center text-white text-sm mt-6 underline cursor-pointer">
+        {/* <p className="text-center text-white text-sm mt-6 underline cursor-pointer">
           Forgot your password?
-        </p>
+        </p> */}
 
         <p className="text-center text-white text-sm mt-4">
           Don't have an account?{' '}

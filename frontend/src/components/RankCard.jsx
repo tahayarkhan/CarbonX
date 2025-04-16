@@ -1,9 +1,9 @@
 import React from "react";
 import { Droplet, Zap, Car } from "lucide-react";
 
-const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage }) => {
+const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage, score }) => {
     return (
-        <div className="flex items-center p-6 bg-white shadow-md rounded-lg">
+        <div className="flex items-center p-6 bg-white/70 backdrop-blur-lg shadow-lg rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300">
             {/* Profile Section */}
             <div className="flex flex-col items-center mr-6">
                 <img
@@ -34,13 +34,11 @@ const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage
                 </div>
             </div>
 
-            {/* Button Section */}
-            <a
-                href="#"
-                className="ml-6 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
-            >
-                View Data
-            </a>
+            {/* Score Section */}
+            <div className="ml-6 flex flex-col items-center">
+                <span className="text-sm text-gray-500">Score</span>
+                <span className="text-3xl font-bold text-blue-600">{score}</span>
+            </div>
         </div>
     );
 };

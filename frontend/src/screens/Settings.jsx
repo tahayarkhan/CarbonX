@@ -58,16 +58,19 @@ const Settings = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 px-4">
       <Navbar />
 
-      <form onSubmit={handleSubmit} className="text-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white/70 backdrop-blur-md border border-gray-200 shadow-2xl rounded-2xl p-8 flex flex-col items-center transition-all duration-300 ease-in-out hover:shadow-green-200"
+      >
         <div className="flex flex-col items-center">
           <label htmlFor="file-upload" className="cursor-pointer">
             <img
               src={postImage.myFile || defaultImage}
               alt="profile"
-              className="rounded-full object-cover w-48 h-48"
+              className="rounded-full object-cover w-48 h-48 ring-4 ring-green-300 hover:scale-105 hover:ring-green-500 transition-transform duration-300 ease-in-out shadow-md"
             />
           </label>
 
@@ -76,16 +79,23 @@ const Settings = () => {
             name="myFile"
             id="file-upload"
             accept=".jpeg, .png, .jpg"
-            className="mt-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring focus:ring-green-500 focus:border-green-500"
+            className="hidden"
             onChange={handleFileUpload}
           />
+
+          <label
+            htmlFor="file-upload"
+            className="mt-4 inline-block cursor-pointer px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm font-medium rounded-md shadow transition-all duration-200"
+          >
+            Change Profile Picture
+          </label>
         </div>
 
         <button
           type="submit"
-          className="mt-6 px-4 py-2 bg-green-500 text-white font-semibold rounded shadow hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300"
+          className="mt-6 w-full py-2 px-4 bg-green-500 text-white font-semibold text-lg rounded-lg shadow-md hover:bg-green-600 transition-all duration-300"
         >
-          Submit
+          Save Changes
         </button>
       </form>
     </div>
