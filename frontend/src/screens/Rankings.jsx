@@ -139,7 +139,7 @@ const Rankings = () => {
     console.log("Fetching leaderboard data...");
     try {
       // Make the API request
-      const { data } = await axios.get("/api/footprints/leaderboard");
+      const { data } = await axios.get("https://carbon-x-backend.vercel.app//api/footprints/leaderboard");
   
       // Log the raw data response from the API
       console.log("Data received from API:", data);
