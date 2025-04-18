@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import defaultImage from '../assets/profile/default.jpg';
 import axios from 'axios';
 
-const url = "http://localhost:8080/api/users/";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Settings = () => {
   const [postImage, setPostImage] = useState({ myFile: "" });
@@ -16,7 +16,7 @@ const Settings = () => {
           const headers = {
             Authorization: `Bearer ${token}`,
           };
-          const response = await axios.get('http://localhost:8080/api/users/profilePicture', { headers });
+          const response = await axios.get('${API_URL}/api/users/profilePicture', { headers });
           const { profilePicture } = response.data;
           if (profilePicture) {
             setPostImage({ myFile: profilePicture });
@@ -43,7 +43,7 @@ const Settings = () => {
         Authorization: `Bearer ${token}`,
       };
 
-      await axios.post('http://localhost:8080/api/users/upload', userData, { headers });
+      await axios.post('${API_URL}/api/users/upload', userData, { headers });
       console.log("Profile picture updated successfully");
     } catch (error) {
       console.error("Error uploading image", error);
