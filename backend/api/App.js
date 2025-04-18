@@ -18,7 +18,7 @@ const app = express();
 
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
-app.use(cors({ origin: "https://carbon-x-flax.vercel.app/", credentials: true }));
+app.use(cors({ origin: "https://carbon-x-flax.vercel.app", credentials: true }));
 app.use(morgan('dev'));
 
 // Connect to MongoDB once
