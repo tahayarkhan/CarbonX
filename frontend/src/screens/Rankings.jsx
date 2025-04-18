@@ -6,6 +6,7 @@ import RankCard from "@/components/RankCard";
 import Top3BarChart from "@/components/Top3BarChart";
 import { User, UserPlus, UserMinus, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SkeletonCard = () => (
   <div className="animate-pulse flex items-center justify-between bg-white shadow-sm border border-zinc-100 rounded-xl p-4 mb-3">
