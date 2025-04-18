@@ -101,7 +101,8 @@ const DashboardScreen = () => {
   // };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="relative min-h-screen flex flex-col w-full bg-gradient-to-br from-green-600 via-green-500 to-emerald-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+
       <Navbar />
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <motion.div 

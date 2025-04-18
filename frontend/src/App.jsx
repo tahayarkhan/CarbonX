@@ -6,8 +6,6 @@ import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import FootprintForm from "./components/FootprintForm";
-import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
 import { getTest } from "./functions/test";
 import Rankings from './screens/Rankings'
 import PrivateRoute from './components/PrivateRoute.jsx';

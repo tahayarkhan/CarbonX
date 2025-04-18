@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Mail, Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
 import leaf from '/leaf.png';
 
 const LoginScreen = () => {
@@ -34,67 +36,79 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-green-500 to-black">
-      <div className="w-full max-w-md p-8 shadow-2xl rounded-2xl bg-white/10 backdrop-blur-md">
-        <a href="/" className="text-center no-underline">
-          <h2 className="text-white font-bold text-3xl mt-2 tracking-tight hover:tracking-wide transition-all duration-300">
-            Carbon
-            <img
-              src={leaf}
-              alt="leaf"
-              className="inline-block w-14 h-14 ml-2 transition-transform duration-300 hover:scale-110"
-            />
-          </h2>
-        </a>
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-green-600 via-green-500 to-emerald-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+      {/* Background Glow Elements */}
+      <div className="absolute w-[400px] h-[400px] bg-green-400 dark:bg-emerald-900 rounded-full opacity-20 blur-[100px] animate-pulse top-10 left-10" />
+      <div className="absolute w-[300px] h-[300px] bg-emerald-400 dark:bg-teal-900 rounded-full opacity-20 blur-[80px] animate-pulse bottom-20 right-20" />
+      <div className="absolute w-[250px] h-[250px] bg-teal-400 dark:bg-green-900 rounded-full opacity-20 blur-[60px] animate-blob top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
 
-        <form onSubmit={submitHandler} className="mt-6">
-          <div className="mb-6">
-            <label htmlFor="email" className="block text-white text-sm mb-2">
-              Email
-            </label>
+      {/* Form Container */}
+      <motion.div
+        className="w-full max-w-md p-8 shadow-2xl rounded-3xl bg-white/10 dark:bg-gray-900/30 backdrop-blur-lg border border-white/20 dark:border-gray-700/30 z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+          <a href="/" className="no-underline">
+            <motion.h2 
+                  className="text-4xl font-extrabold text-white tracking-tight text-center mb-8"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  Carbon <motion.span 
+                    className="text-green-300 dark:text-emerald-400"
+                    initial={{ opacity: 0, scale: 1.2 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                  >X</motion.span>
+            </motion.h2>
+           </a>  
+
+        <form onSubmit={submitHandler} className="space-y-6">
+          <div className="flex items-center gap-3 bg-white/10 dark:bg-white/5 rounded-lg px-4 py-3">
+            <Mail className="text-white opacity-70" />
             <input
-              id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Email"
+              className="bg-transparent w-full outline-none text-white placeholder-white/60"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 rounded-xl bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-400"
+              required
             />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-white text-sm mb-2">
-              Password
-            </label>
+          <div className="flex items-center gap-3 bg-white/10 dark:bg-white/5 rounded-lg px-4 py-3">
+            <Lock className="text-white opacity-70" />
             <input
-              id="password"
               type="password"
-              placeholder="Create a password"
+              placeholder="Password"
+              className="bg-transparent w-full outline-none text-white placeholder-white/60"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 rounded-xl bg-gray-800 text-white outline-none focus:ring-2 focus:ring-green-400"
+              required
             />
           </div>
 
-          <button
+          <motion.button
             type="submit"
-            className="w-full py-3 mt-4 bg-green-500 text-black font-bold rounded-xl hover:bg-green-600 transition duration-300"
+            className="w-full py-3 bg-white/20 dark:bg-gray-800/30 text-white font-semibold rounded-full 
+                       hover:bg-white/30 dark:hover:bg-gray-700/30 transition-all duration-300 
+                       hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:scale-105 backdrop-blur-sm 
+                       border border-white/30 dark:border-gray-600/30"
+            whileTap={{ scale: 0.95 }}
           >
             Login
-          </button>
+          </motion.button>
         </form>
 
-        {/* <p className="text-center text-white text-sm mt-6 underline cursor-pointer">
-          Forgot your password?
-        </p> */}
-
-        <p className="text-center text-white text-sm mt-4">
-          Don't have an account?{' '}
-          <a href="/register" className="underline">
-            Sign up.
+        <p className="text-white text-center mt-6 text-sm opacity-80">
+          Don't have an account?{" "}
+          <a href="/register" className="underline hover:text-green-300 transition-colors">
+            Sign Up
           </a>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

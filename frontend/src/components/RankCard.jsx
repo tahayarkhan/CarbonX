@@ -17,7 +17,6 @@ const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage
 
             {/* Goal and Metrics Section */}
             <div className="flex-grow flex flex-col mx-6">
-                <h6 className="text-lg font-medium">Goal: Reducing carbon footprint</h6>
                 <div className="flex flex-wrap gap-6 mt-4">
                     <div className="flex items-center gap-2">
                         <Droplet size={30} />

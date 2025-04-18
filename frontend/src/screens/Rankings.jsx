@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from '../components/Navbar';
 import RankCard from "@/components/RankCard";
+import Top3BarChart from "@/components/Top3BarChart";
 import { User, UserPlus, UserMinus, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SkeletonCard = () => (
@@ -30,74 +31,6 @@ const SkeletonRankCard = () => (
   </div>
 );
 
-const Top3BarChart = ({ top3 }) => {
-  if (!top3 || top3.length === 0) return null;
-  
-  // Filter out any null or undefined items
-  const validTop3 = top3.filter(item => item && item.user);
-  
-  // Reorder the top3 array to match the desired layout: [2nd, 1st, 3rd]
-  const orderedTop3 = [
-    validTop3[1], // 2nd place
-    validTop3[0], // 1st place
-    validTop3[2]  // 3rd place
-  ];
-
-  // Fixed heights for each position
-  const heights = ['140px', '200px', '100px']; // [2nd, 1st, 3rd]
-  
-  return (
-    <div className="w-full mb-8">
-      <h3 className="text-xl text-center font-semibold text-zinc-800 mb-32">Top 3 Performers</h3>
-      <div className="flex items-end justify-between h-[220px] gap-4">
-        {orderedTop3.map((item, index) => {
-          if (!item || !item.user) return null;
-          
-          const colors = ['bg-zinc-300', 'bg-amber-400', 'bg-amber-600'];
-          const positions = ['2nd', '1st', '3rd'];
-          const barWidths = ['w-3/4', 'w-full', 'w-3/4'];
-          const delays = [0.2, 0, 0.4];
-          
-          return (
-            <div key={item._id} className={`${barWidths[index]} flex flex-col items-center`}>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: delays[index] }}
-                className="flex flex-col items-center mb-2"
-              >
-                {item.user.profilePicture ? (
-                  <img 
-                    src={item.user.profilePicture} 
-                    alt={item.user.name || 'User'}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
-                  />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                    <User className="w-6 h-6 text-blue-600" />
-                  </div>
-                )}
-                <span className="text-sm font-medium text-zinc-700 mt-1">{item.user.name || 'Anonymous'}</span>
-                <span className="text-xs text-zinc-500">{positions[index]}</span>
-              </motion.div>
-              <motion.div 
-                initial={{ height: 0 }}
-                animate={{ height: heights[index] }}
-                transition={{ 
-                  duration: 1,
-                  delay: delays[index],
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                style={{ height: heights[index] }}
-                className={`w-full ${colors[index]} rounded-t-lg`}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
 
 const Rankings = () => {
   const [friends, setFriends] = useState([]);
@@ -283,8 +216,14 @@ const Rankings = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-zinc-50 pt-20">
+
+
+
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-green-600 via-green-500 to-emerald-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-20">
+      
       <Navbar />
+      
+      
       <div className="w-full max-w-4xl mt-16 p-4 bg-white shadow-sm rounded-2xl border border-zinc-100 transition-all duration-300 ease-in-out">
         {error && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -471,6 +410,7 @@ const Rankings = () => {
               <Top3BarChart top3={globalFootprints.slice(0, 3)} />
             ) : null
           )}
+
           
           <div className="space-y-4">
             {isLoading ? (
@@ -522,6 +462,7 @@ const Rankings = () => {
                             </div>
                           </div>
                         </div>
+
                       );
                     })
                   ) : (
@@ -576,6 +517,8 @@ const Rankings = () => {
                             </div>
                           </div>
                         </div>
+
+                       
                       );
                     })
                   )
@@ -590,3 +533,4 @@ const Rankings = () => {
 };
 
 export default Rankings;
+

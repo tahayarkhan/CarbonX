@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
-import leaf from "../../public/leaf.png"
+import Creators from "./Creators";
 
 const HomeScreen = () => {
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  const scrollToCreators = () => {
+    const creatorsSection = document.getElementById("creators");
+    creatorsSection?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const creatorsSection = document.getElementById("creators");
+      const rect = creatorsSection?.getBoundingClientRect();
+      if (rect && rect.top <= window.innerHeight * 0.5) {
+        setShowScrollIndicator(false);
+      } else {
+        setShowScrollIndicator(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  
+
   return (
-    <div className="flex flex-col min-h-screen w-full bg-gradient-to-br from-green-600 via-green-500 to-emerald-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="relative flex flex-col w-full bg-gradient-to-br from-green-600 via-green-500 to-emerald-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Enhanced animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Base glow elements */}
@@ -25,7 +49,9 @@ const HomeScreen = () => {
       </div>
 
       <Navbar />
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-24 relative z-10">
+      
+      {/* Hero Section */}
+      <section className="min-h-screen flex flex-col items-center justify-center py-12 sm:py-24 relative z-10">
         <motion.div 
           className="backdrop-blur-md bg-white/10 dark:bg-gray-900/30 p-10 rounded-3xl shadow-xl border border-white/20 dark:border-gray-700/30 w-full max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
@@ -97,42 +123,52 @@ const HomeScreen = () => {
             </motion.div>
           </div>
         </motion.div>
-      </main>
+      </section>
 
-      {/* Centered scroll cue with bouncing arrow */}
-      <motion.div
-        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5 }}
-      >
+      {/* Scroll Indicator */}
+      {showScrollIndicator && (
         <motion.div
-          className="flex flex-col items-center space-y-3"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ 
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
+          className="fixed bottom-8 self-center transform -translate-x-1/2 z-10 flex flex-col items-center cursor-pointer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5 }}
+          onClick={scrollToCreators}
         >
-          <div className="text-white/80 dark:text-gray-300 text-sm tracking-wide font-medium">Scroll to explore</div>
-          <div className="w-10 h-10 rounded-full bg-white/10 dark:bg-gray-800/30 backdrop-blur-sm flex items-center justify-center shadow-lg border border-white/20">
-            <svg 
-              className="w-5 h-5 text-white" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-              />
-            </svg>
-          </div>
+          <motion.div
+            className="flex flex-col items-center space-y-3"
+            animate={{ y: [0, 10, 0] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <div className="text-white/80 dark:text-gray-300 text-sm tracking-wide font-medium">
+              Scroll to meet the creators
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white/10 dark:bg-gray-800/30 backdrop-blur-sm flex items-center justify-center shadow-lg border border-white/20">
+              <svg
+                className="w-5 h-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
+
+      {/* Creators Section */}
+      <section id="creators" className="min-h-screen w-full">
+        <Creators />
+      </section>
     </div>
   );
 };
