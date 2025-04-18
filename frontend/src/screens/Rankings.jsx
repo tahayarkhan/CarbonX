@@ -136,15 +136,26 @@ const Rankings = () => {
 
   const fetchGeneralLeaderboard = async () => {
     setIsLoadingGlobal(true);
+    console.log("Fetching leaderboard data...");
     try {
+      // Make the API request
       const { data } = await axios.get("/api/footprints/leaderboard");
+  
+      // Log the raw data response from the API
+      console.log("Data received from API:", data);
+  
       if (!data || !Array.isArray(data)) {
         throw new Error("Invalid data format received");
       }
-      
+  
       // Get unique users and sort by score
       const uniqueFootprints = getUniqueUsers(data);
+      console.log("Unique footprints after filtering:", uniqueFootprints);
+  
       const sortedData = uniqueFootprints.sort((a, b) => a.score - b.score);
+      console.log("Sorted footprints by score:", sortedData);
+  
+      // Set state with sorted data
       setGlobalFootprints(sortedData);
     } catch (error) {
       console.error("Error fetching general leaderboard", error);
