@@ -59,4 +59,4 @@ app.use("/api/friends", friendRoutes);
 app.use("/api/footprints", footprintRoutes);
 app.use("/", testRoutes);
 
-export default serverless(app);
+export default app;
