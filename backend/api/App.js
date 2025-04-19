@@ -59,4 +59,12 @@ app.use("/api/friends", friendRoutes);
 app.use("/api/footprints", footprintRoutes);
 app.use("/", testRoutes);
 
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+
 export default app;
