@@ -34,7 +34,9 @@ const App = () => {
           <Route
           path="/dashboard"
           element={
+            <PrivateRoute>
               <DashboardScreen />
+            </PrivateRoute>
           }
           />
           <Route path='/settings' element={<Settings />} />
