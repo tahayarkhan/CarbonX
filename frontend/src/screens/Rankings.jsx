@@ -8,6 +8,17 @@ import { User, UserPlus, UserMinus, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import 'react-toastify/dist/ReactToastify.css';
 
+import {
+  fetchUserFootprint as getUserFootprintAPI,
+  fetchFriendsFootprints as getFriendsFootprintsAPI,
+  fetchGeneralLeaderboard as getGeneralLeaderboardAPI,
+  fetchFriends as getFriendsAPI,
+  fetchFriendRequests as getFriendRequestsAPI,
+  sendFriendRequest as sendFriendRequestAPI,
+  acceptFriendRequest as acceptFriendRequestAPI,
+  rejectFriendRequest as rejectFriendRequestAPI,
+} from "@/services/api";
+
 const SkeletonCard = () => (
   <div className="animate-pulse flex items-center justify-between bg-white shadow-sm border border-zinc-100 rounded-xl p-4 mb-3">
     <div className="flex items-center gap-3">
@@ -68,10 +79,7 @@ const Rankings = () => {
 
   const fetchUserFootprint = async () => {
     try {
-      const token = localStorage.getItem("authToken");
-      const { data } = await axios.get("/api/footprints/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const data = await getUserFootprintAPI();
       if (data && Array.isArray(data)) {
         // Get the user's best (lowest) score from all their footprints
         const bestFootprint = data.reduce((best, current) => {
@@ -91,10 +99,7 @@ const Rankings = () => {
   const fetchFriendsFootprints = async (userFootprintData) => {
     setIsLoadingFriends(true);
     try {
-      const token = localStorage.getItem("authToken");
-      const { data } = await axios.get("/api/footprints/friends", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const  data  = await getFriendsFootprintsAPI();
       if (!data || !Array.isArray(data)) {
         throw new Error("Invalid data format received");
       }
@@ -139,21 +144,18 @@ const Rankings = () => {
     console.log("Fetching leaderboard data...");
     try {
       // Make the API request
-      const { data } = await axios.get("https://carbon-x-backend.vercel.app/api/footprints/leaderboard");
-  
-      // Log the raw data response from the API
-      console.log("Data received from API:", data);
-  
+      const data  = await getGeneralLeaderboardAPI();
+      
+
+
       if (!data || !Array.isArray(data)) {
         throw new Error("Invalid data format received");
       }
   
       // Get unique users and sort by score
       const uniqueFootprints = getUniqueUsers(data);
-      console.log("Unique footprints after filtering:", uniqueFootprints);
   
       const sortedData = uniqueFootprints.sort((a, b) => a.score - b.score);
-      console.log("Sorted footprints by score:", sortedData);
   
       // Set state with sorted data
       setGlobalFootprints(sortedData);
@@ -200,29 +202,29 @@ const Rankings = () => {
   }, [isLoggedIn]);
 
   const fetchFriends = async () => {
-    const { data } = await axios.get("/api/friends/list", { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } });
+    const  data  = await getFriendsAPI();
     setFriends(data);
   };
 
   const fetchFriendRequests = async () => {
-    const { data } = await axios.get("/api/friends/requests", { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } });
+    const  data  = await getFriendRequestsAPI();
     setFriendRequests(data);
   };
 
   const sendFriendRequest = async () => {
-    await axios.post("/api/friends/send", { username }, { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } });
+    await sendFriendRequestAPI();
     toast.success("Friend request sent!");
     setUsername("");
   };
 
   const acceptRequest = async (friendId) => {
-    await axios.post("/api/friends/accept", { friendId }, { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } });
+    await acceptFriendRequestAPI();
     fetchFriends();
     fetchFriendRequests();
   };
 
   const rejectRequest = async (friendId) => {
-    await axios.post("/api/friends/reject", { friendId }, { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } });
+    await rejectFriendRequestAPI();
     fetchFriendRequests();
   };
 

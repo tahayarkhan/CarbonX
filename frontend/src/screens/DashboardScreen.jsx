@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import { motion } from 'framer-motion';
 import { DocumentTextIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import FootprintForm from '../components/FootprintForm';
+import { fetchUserFootprint } from '@/services/api';
 
 const DashboardScreen = () => {
   const [footprints, setFootprints] = useState([]);
@@ -14,14 +15,9 @@ const DashboardScreen = () => {
 
   useEffect(() => {
     const fetchFootprints = async () => {
-      const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
+     
 
-      const { data } = await axios.get('/api/footprints/user', config);
+      const  data  = await fetchUserFootprint();
       setFootprints(data);
 
       // const inputs = data.map(fp => [fp.waterUsage, fp.electricityUsage, fp.carUsage]);

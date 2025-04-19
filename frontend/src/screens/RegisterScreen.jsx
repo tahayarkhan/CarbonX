@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User } from "lucide-react";
 import { motion } from 'framer-motion';
 import leaf from '/leaf.png';
+import { userRegister } from '@/services/api';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
@@ -16,6 +17,8 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
+    
+    
     e.preventDefault();
     if (password !== confirmPassword) {
       alert('Passwords do not match');
@@ -25,14 +28,7 @@ const RegisterScreen = () => {
     setLoading(true);
 
     try {
-      const config = { headers: { 'Content-Type': 'application/json' } };
-
-      const { data } = await axios.post(
-        '/api/users',
-        { name, email, username, password },
-        config
-      );
-
+      const { data } = await userRegister({ name, email, username, password });
       localStorage.setItem('userInfo', JSON.stringify(data));
       localStorage.setItem('authToken', data.token);
       navigate('/dashboard');

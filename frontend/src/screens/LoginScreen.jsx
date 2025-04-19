@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Mail, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import leaf from '/leaf.png';
+import { userLogin } from '@/services/api';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -14,22 +15,13 @@ const LoginScreen = () => {
     e.preventDefault();
 
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
 
-      const { data } = await axios.post(
-        '/api/users/login',
-        { email, password },
-        config
-      );
+      const  data  = await userLogin({ email, password });
 
       localStorage.setItem('userInfo', JSON.stringify(data));
       localStorage.setItem('authToken', data.token);
-
       navigate('/dashboard');
+
     } catch (error) {
       alert('Invalid email or password');
     }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import defaultImage from '../assets/profile/default.jpg';
 import axios from 'axios';
+import { uploadPhoto, fetchProfilePhoto } from '@/services/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,17 +12,13 @@ const Settings = () => {
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-          const headers = {
-            Authorization: `Bearer ${token}`,
-          };
-          const response = await axios.get('${API_URL}/api/users/profilePicture', { headers });
+       
+          const response = await fetchProfilePhoto();
           const { profilePicture } = response.data;
           if (profilePicture) {
             setPostImage({ myFile: profilePicture });
           }
-        }
+        
       } catch (error) {
         console.error("Error fetching profile picture", error);
       }
@@ -38,12 +35,7 @@ const Settings = () => {
     };
 
     try {
-      const token = localStorage.getItem('authToken');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      await axios.post('${API_URL}/api/users/upload', userData, { headers });
+      uploadPhoto(userData);
       console.log("Profile picture updated successfully");
     } catch (error) {
       console.error("Error uploading image", error);

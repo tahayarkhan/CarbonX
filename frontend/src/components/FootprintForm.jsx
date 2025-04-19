@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { submitFootprintData } from '@/services/api';
 
-const FootprintForm = ({ onAddFootprint }) => {
+
+
+const FootprintForm = () => {
   const [waterUsage, setWaterUsage] = useState('');
   const [electricityUsage, setElectricityUsage] = useState('');
   const [carUsage, setCarUsage] = useState('');
@@ -10,21 +13,7 @@ const FootprintForm = ({ onAddFootprint }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    await axios.post(
-      '/api/footprints',
-      { waterUsage, electricityUsage, carUsage },
-      config
-    );
-
+    await submitFootprintData({ waterUsage, electricityUsage, carUsage });
     // Optionally, reset the form
     setWaterUsage(0);
     setElectricityUsage(0);
