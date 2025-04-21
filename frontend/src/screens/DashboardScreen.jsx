@@ -101,6 +101,9 @@ const DashboardScreen = () => {
 
       <Navbar />
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        
+        
+        
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -111,11 +114,11 @@ const DashboardScreen = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full"
-          >
+            className="w-full max-w-2xl mx-auto p-8 bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border border-white/30 dark:border-gray-700/40 rounded-3xl shadow-xl space-y-6"
+            >
             <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
-              <DocumentTextIcon className="h-6 w-6 text-blue-500" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Your Footprints</h2>
+              <DocumentTextIcon className="h-6 w-6 text-white" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Your Footprints</h2>
             </div>
             
             {footprints.length === 0 ? (

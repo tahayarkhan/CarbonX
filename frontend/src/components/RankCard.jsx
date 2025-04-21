@@ -3,40 +3,37 @@ import { Droplet, Zap, Car } from "lucide-react";
 
 const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage, score }) => {
     return (
-        <div className="flex items-center p-6 bg-white/70 backdrop-blur-lg shadow-lg rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300">
+        <div className="flex items-center justify-between p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl transition-all duration-300">
             {/* Profile Section */}
-            <div className="flex flex-col items-center mr-6">
+            <div className="flex items-center gap-4 min-w-[200px]">
                 <img
-                    src={profilePicture || "/default-profile.png"} 
-                    className="rounded-full"
+                    src={profilePicture || "/default-profile.png"}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
                     alt="profile"
-                    style={{ width: "100px", height: "100px" }}
                 />
-                <h5 className="mt-3 text-lg font-semibold text-center">{name}</h5>
+                <h5 className="text-lg font-semibold text-gray-900 dark:text-white truncate max-w-[120px]">{name}</h5>
             </div>
 
-            {/* Goal and Metrics Section */}
-            <div className="flex-grow flex flex-col mx-6">
-                <div className="flex flex-wrap gap-6 mt-4">
-                    <div className="flex items-center gap-2">
-                        <Droplet size={30} />
-                        <p className="text-lg font-medium">{waterUsage} L</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Zap size={30} />
-                        <p className="text-lg font-medium">{electricityUsage} kW</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Car size={30} />
-                        <p className="text-lg font-medium">{carUsage} L</p>
-                    </div>
+            {/* Metrics */}
+            <div className="flex gap-8 text-gray-700 dark:text-gray-100">
+                <div className="flex items-center gap-2">
+                    <Droplet size={24} className="text-blue-400" />
+                    <p className="text-base">{waterUsage} L</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Zap size={24} className="text-yellow-400" />
+                    <p className="text-base">{electricityUsage} kW</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Car size={24} className="text-red-400" />
+                    <p className="text-base">{carUsage} L</p>
                 </div>
             </div>
 
-            {/* Score Section */}
-            <div className="ml-6 flex flex-col items-center">
-                <span className="text-sm text-gray-500">Score</span>
-                <span className="text-3xl font-bold text-blue-600">{score}</span>
+            {/* Score */}
+            <div className="text-center px-4">
+                <span className="block text-xs text-gray-500 dark:text-gray-400 uppercase">Score</span>
+                <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{score}</span>
             </div>
         </div>
     );

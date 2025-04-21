@@ -236,8 +236,13 @@ const Rankings = () => {
       
       <Navbar />
       
+      <motion.div 
+          className="backdrop-blur-md bg-white/40 dark:bg-gray-900/40 p-10 rounded-3xl shadow-xl border border-white/30 dark:border-gray-700/40 w-full max-w-4xl mx-auto my-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
       
-      <div className="w-full max-w-4xl mt-16 p-4 bg-white shadow-sm rounded-2xl border border-zinc-100 transition-all duration-300 ease-in-out">
         {error && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-600">{error}</p>
@@ -250,8 +255,8 @@ const Rankings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <User className="h-6 w-6 text-zinc-600" />
-                  <h3 className="text-xl font-semibold text-zinc-800">Friends</h3>
+                  <User className="h-6 w-6 text-white" />
+                  <h3 className="text-xl font-semibold text-white">Friends</h3>
                 </div>
                 <AnimatePresence>
                   {isLoading ? (
@@ -276,14 +281,16 @@ const Rankings = () => {
                       </motion.div>
                     ))
                   ) : (
+                    
+                    
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
                       className="text-center py-6 bg-zinc-50 rounded-xl border border-zinc-100"
                     >
-                      <UserPlus className="h-8 w-8 text-zinc-400 mx-auto mb-2" />
-                      <p className="text-zinc-500">No friends yet. Add some to see their rankings!</p>
+                      <UserPlus className="h-8 w-8 text-white mx-auto mb-2" />
+                      <p className="text-white">No friends yet. Add some to see their rankings!</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -291,8 +298,8 @@ const Rankings = () => {
 
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <UserPlus className="h-6 w-6 text-zinc-600" />
-                  <h3 className="text-xl font-semibold text-zinc-800">Friend Requests</h3>
+                  <UserPlus className="h-6 w-6 text-white" />
+                  <h3 className="text-xl font-semibold text-white">Friend Requests</h3>
                 </div>
                 <AnimatePresence>
                   {isLoading ? (
@@ -397,10 +404,11 @@ const Rankings = () => {
           </>
         )}
 
-        <div className="mt-8">
+        <div className="my-8">
+          
           <div className="flex items-center justify-center gap-2 mb-6">
             <User className="h-8 w-8 text-blue-600" />
-            <h2 className="text-2xl font-semibold text-zinc-800">
+            <h2 className="text-2xl font-semibold text-white">
               {isLoggedIn ? "Friends Leaderboard" : "Global Leaderboard"}
             </h2>
           </div>
@@ -486,6 +494,13 @@ const Rankings = () => {
                     </div>
                   )
                 ) : (
+
+                  
+
+                
+                  
+                  
+                  
                   // Global Leaderboard
                   isLoadingGlobal ? (
                     Array(3).fill(0).map((_, index) => <SkeletonRankCard key={index} />)
@@ -512,7 +527,7 @@ const Rankings = () => {
                                   : 'text-amber-700'
                                 : 'text-blue-600'
                             }`}>
-                              {index + 1}
+                              {index + 1} 
                             </span>
                           </div>
                           <div className={`flex-1 ${
@@ -530,8 +545,6 @@ const Rankings = () => {
                             </div>
                           </div>
                         </div>
-
-                       
                       );
                     })
                   )
@@ -540,7 +553,7 @@ const Rankings = () => {
             )}
           </div>
         </div>
-      </div>
+      </motion.div> 
     </div>
   );
 };

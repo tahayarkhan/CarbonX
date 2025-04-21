@@ -22,7 +22,7 @@ const Top3BarChart = ({ top3 }) => {
     
     return (
       <div className="w-full mb-8">
-        <h3 className="text-xl text-center font-semibold text-zinc-800 mb-32">Top 3 Performers</h3>
+        <h3 className="text-xl text-center font-semibold text-white mb-32">Top 3 Performers</h3>
         <div className="flex items-end justify-between h-[220px] gap-4">
           {orderedTop3.map((item, index) => {
             if (!item || !item.user) return null;

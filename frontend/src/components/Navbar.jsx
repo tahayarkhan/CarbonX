@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import defaultImage from '../assets/profile/default.jpg';
 import leaf from '/leaf.png';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { fetchProfilePhoto } from '@/services/api';

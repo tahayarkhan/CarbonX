@@ -33,17 +33,15 @@ const HomeScreen = () => {
     <div className="relative flex flex-col w-full bg-gradient-to-br from-green-600 via-green-500 to-emerald-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Enhanced animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Base glow elements */}
+        
         <div className="absolute w-[500px] h-[500px] bg-green-400 dark:bg-emerald-900 rounded-full opacity-20 blur-[100px] animate-pulse top-10 left-10" />
         <div className="absolute w-[400px] h-[400px] bg-emerald-400 dark:bg-teal-900 rounded-full opacity-20 blur-[80px] animate-pulse bottom-20 right-20" />
         <div className="absolute w-[300px] h-[300px] bg-teal-400 dark:bg-green-900 rounded-full opacity-20 blur-[60px] animate-pulse top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
         
-        {/* Moving blob elements */}
         <div className="absolute -top-40 -left-40 w-80 h-80 bg-green-400 dark:bg-emerald-900 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
         <div className="absolute -top-20 -right-20 w-80 h-80 bg-emerald-400 dark:bg-teal-900 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-40 left-20 w-80 h-80 bg-teal-400 dark:bg-green-900 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
         
-        {/* Additional subtle glow elements */}
         <div className="absolute w-[200px] h-[200px] bg-green-300 dark:bg-emerald-800 rounded-full opacity-10 blur-[50px] animate-pulse top-1/4 right-1/4" />
         <div className="absolute w-[150px] h-[150px] bg-emerald-300 dark:bg-teal-800 rounded-full opacity-10 blur-[40px] animate-pulse bottom-1/4 left-1/4" />
       </div>
