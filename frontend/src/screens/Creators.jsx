@@ -53,7 +53,7 @@ const Creators = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="relative bg-white/10 dark:bg-gray-800/40 rounded-2xl p-8 ring-1 ring-white/10 backdrop-blur-lg shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1"
+              className="relative bg-white/10 dark:bg-gray-800/40 rounded-2xl p-8 ring-1 ring-white/10 backdrop-blur-lg shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 mb-8"
             >
               <div className="flex flex-col items-center">
                 <div className="w-36 h-36 rounded-full overflow-hidden mb-6 border-4 border-white/30 shadow-lg transition-transform duration-300 hover:scale-110">

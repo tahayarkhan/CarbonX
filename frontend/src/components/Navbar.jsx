@@ -15,14 +15,12 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check system preference
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setIsDarkMode(true);
     }
   }, []);
 
   useEffect(() => {
-    // Apply dark mode class to document
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -39,13 +37,12 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchProfilePicture = async () => {
-      try {       
-          const response = await fetchProfilePhoto();
-          const { profilePicture } = response.data;
-          if (profilePicture) {
-            setPostImage({ myFile: profilePicture });
-          }
-        
+      try {
+        const response = await fetchProfilePhoto();
+        const { profilePicture } = response.data;
+        if (profilePicture) {
+          setPostImage({ myFile: profilePicture });
+        }
       } catch (error) {
         console.error('Error fetching profile picture', error);
       }
@@ -69,7 +66,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-black/60 dark:bg-gray-900/60 backdrop-blur-md fixed top-0 left-0 w-full py-4 px-8 shadow-[0_4px_30px_rgba(0,0,0,0.1)] z-50 border-b border-white/10">
+    <nav className="bg-black/60 dark:bg-gray-900/60 backdrop-blur-md fixed top-0 left-0 w-full py-4 px-6 sm:px-8 shadow-[0_4px_30px_rgba(0,0,0,0.1)] z-50 border-b border-white/10">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <a href="#" className="text-white font-bold text-xl flex items-center">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:from-green-300 dark:via-green-400 dark:to-green-500 font-bold text-2xl tracking-wide">
@@ -248,63 +245,11 @@ const Navbar = () => {
           </li>
           <li>
             <button 
-              className="text-white/90 hover:text-green-400 transition-colors duration-200" 
-              onClick={goToSettings}
-            >
-              Settings
-            </button>
-          </li>
-          <li>
-            <button 
-              className="text-white/90 hover:text-green-400 transition-colors duration-200" 
+              className="text-white/90 hover:text-green-400 transition-colors duration-200"
               onClick={logoutHandler}
             >
               Logout
             </button>
-          </li>
-          <li>
-            <motion.button
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="flex items-center gap-2 text-white/90 hover:text-green-400 transition-colors duration-200"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {isDarkMode ? (
-                <>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                    />
-                  </svg>
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                    />
-                  </svg>
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </motion.button>
           </li>
         </ul>
       </div>

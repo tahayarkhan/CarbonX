@@ -3,9 +3,9 @@ import { Droplet, Zap, Car } from "lucide-react";
 
 const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage, score }) => {
     return (
-        <div className="flex items-center justify-between p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl transition-all duration-300">
+        <div className="flex flex-col sm:flex-row items-center sm:justify-between p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl transition-all duration-300">
             {/* Profile Section */}
-            <div className="flex items-center gap-4 min-w-[200px]">
+            <div className="flex items-center gap-4 sm:min-w-[200px] mb-4 sm:mb-0">
                 <img
                     src={profilePicture || "/default-profile.png"}
                     className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
@@ -15,7 +15,7 @@ const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage
             </div>
 
             {/* Metrics */}
-            <div className="flex gap-8 text-gray-700 dark:text-gray-100">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 text-gray-700 dark:text-gray-100">
                 <div className="flex items-center gap-2">
                     <Droplet size={24} className="text-blue-400" />
                     <p className="text-base">{waterUsage} L</p>
@@ -31,7 +31,7 @@ const RankCard = ({ name, profilePicture, waterUsage, electricityUsage, carUsage
             </div>
 
             {/* Score */}
-            <div className="text-center px-4">
+            <div className="text-center sm:text-left sm:px-4 mt-4 sm:mt-0">
                 <span className="block text-xs text-gray-500 dark:text-gray-400 uppercase">Score</span>
                 <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{score}</span>
             </div>
