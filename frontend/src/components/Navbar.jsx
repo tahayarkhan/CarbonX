@@ -3,6 +3,8 @@ import defaultImage from '../assets/profile/default.jpg';
 import leaf from '/leaf.png';
 import { useNavigate } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';
+import { FaTimes, FaBars } from 'react-icons/fa';
+
 import { motion } from 'framer-motion';
 import { fetchProfilePhoto } from '@/services/api';
 
@@ -13,6 +15,8 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
+  
+
 
   useEffect(() => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -66,24 +70,36 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-black/60 dark:bg-gray-900/60 backdrop-blur-md fixed top-0 left-0 w-full py-4 px-6 sm:px-8 shadow-[0_4px_30px_rgba(0,0,0,0.1)] z-50 border-b border-white/10">
+
+
+
+    <nav className="bg-black/60 dark:bg-gray-900/60 backdrop-blur-md fixed top-0 left-0 w-full py-4 px-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)] z-50 border-b border-white/10 right-0">
+      
       <div className="flex items-center justify-between max-w-7xl mx-auto">
+        
         <a href="#" className="text-white font-bold text-xl flex items-center">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:from-green-300 dark:via-green-400 dark:to-green-500 font-bold text-2xl tracking-wide">
             Carbon
           </span>
           <img src={leaf} alt="Leaf" className="ml-2 w-8 h-8" />
         </a>
-        <button
-          className="text-white md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? (
-            <HiX className="w-6 h-6" />
-          ) : (
-            <HiMenu className="w-6 h-6" />
-          )}
-        </button>
+
+        <div className="flex items-center">
+                       
+          <button
+            className="text-white md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <FaTimes className="h-6 w-5"/> 
+            ) : (
+              <FaBars className="h-6 w-5"/>
+            )}
+          </button>
+
+        </div>
+        
+    
         <div className="hidden md:flex items-center gap-x-8">
           {!isLoggedIn && (
             <a href="/" className="text-white/90 hover:text-green-400 transition-colors duration-200">
@@ -213,46 +229,83 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
+
       <div
-        className={`md:hidden transform transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen
-            ? 'opacity-100 translate-y-0 scale-100'
-            : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
-        }`}
+        className=" lg:hidden"
       >
-        <ul className="flex flex-col items-center space-y-6 mt-6 py-6">
-          {!isLoggedIn && (
-            <li>
-              <a href="/" className="text-white/90 hover:text-green-400 transition-colors duration-200">
-                Home
-              </a>
-            </li>
+
+
+        <div className="flex items-center justify-between">
+      
+
+          </div>
+
+          {isMobileMenuOpen && (
+
+              <ul className="flex flex-col items-center space-y-6 mt-6 py-6">
+              {!isLoggedIn && (
+                <li>
+                  <a href="/" className="text-white/90 hover:text-green-400 transition-colors duration-200">
+                    Home
+                  </a>
+                </li>
+              )}
+              <li>
+                {isLoggedIn && (
+                  <a href="/dashboard" className="text-white/90 hover:text-green-400 transition-colors duration-200">
+                    Dashboard
+                  </a>
+                )}
+              </li>
+              <li>
+                <button 
+                  onClick={handleLeaderboardClick} 
+                  className="text-white/90 hover:text-green-400 transition-colors duration-200"
+                >
+                  Leaderboard
+                </button>
+              </li>
+              
+              {isLoggedIn ? (
+                <>
+                  <button
+                    className="text-white/90 hover:text-green-400 transition-colors duration-200"
+                    onClick={goToSettings}
+                  >
+                    Settings
+                  </button>
+                  <button
+                    className="text-white/90 hover:text-green-400 transition-colors duration-200"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="text-white/90 hover:text-green-400 transition-colors duration-200"
+                    onClick={() => navigate('/register')}
+                  >
+                    Register
+                  </button>
+                  <button
+                    className="text-white/90 hover:text-green-400 transition-colors duration-200"
+                    onClick={() => navigate('/login')}
+                  >
+                    Login
+                  </button>
+                </>
+              )}
+
+
+
+              </ul>
           )}
-          <li>
-            {isLoggedIn && (
-              <a href="/dashboard" className="text-white/90 hover:text-green-400 transition-colors duration-200">
-                Dashboard
-              </a>
-            )}
-          </li>
-          <li>
-            <button 
-              onClick={handleLeaderboardClick} 
-              className="text-white/90 hover:text-green-400 transition-colors duration-200"
-            >
-              Leaderboard
-            </button>
-          </li>
-          <li>
-            <button 
-              className="text-white/90 hover:text-green-400 transition-colors duration-200"
-              onClick={logoutHandler}
-            >
-              Logout
-            </button>
-          </li>
-        </ul>
+
       </div>
+
+
     </nav>
   );
 };
